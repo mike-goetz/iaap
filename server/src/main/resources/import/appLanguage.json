@@ -1,0 +1,169 @@
+{
+  "attributeType": {
+    "id": "APP_LANGUAGE",
+    "localizations": [
+      {
+        "type": "NAME",
+        "languageCode": "de",
+        "value": "Anwendungssprache"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "fr",
+        "value": "Langue d'application"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "it",
+        "value": "Lingua dell'applicazione"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "en",
+        "value": "Application Language"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "de",
+        "value": "Anwendungssprachen"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "fr",
+        "value": "Langues d'application"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "it",
+        "value": "Lingue dell'applicazione"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "en",
+        "value": "Application Languages"
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "de_CH",
+      "language": "de",
+      "country": "DE",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Deutsch"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Allemand"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Tedesco"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "German"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "fr_FR",
+      "language": "fr",
+      "country": "FR",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Französisch"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Français"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Francese"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "French"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "it_IT",
+      "language": "it",
+      "country": "IT",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Italienisch"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Italien"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Italiano"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Italien"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "en_EN",
+      "language": "en",
+      "country": "EN",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Englisch"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Anglais"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Inglese"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "English"
+        }
+      ]
+    }
+  ]
+}

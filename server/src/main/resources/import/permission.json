@@ -1,0 +1,173 @@
+{
+  "attributeType": {
+    "id": "PERMISSION",
+    "localizations": [
+      {
+        "type": "NAME",
+        "languageCode": "en",
+        "value": "Permission"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "de",
+        "value": "Berechtigung"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "en",
+        "value": "Permissions"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "de",
+        "value": "Berechtigungen"
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "EDIT_ROLES",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Edit Roles"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Editing Roles"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "EDIT_PERMISSIONS",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Edit Permissions"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Editing Permissions"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "EDIT_USERS",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Edit Users"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Editing Users"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "SEARCH_ISSUES",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Search Issues"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Searching for Issues"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "DISPLAY_REPORTS",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Display Reports"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Viewing Reports"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "INVITE_USERS",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Invite Users"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Invitation"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "SYNC_PREVIEW",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Sync Preview"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Preview of Sync Jobs"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "EDIT_SYNC_TASKS",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Edit Sync Tasks"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Allows Editing Sync Tasks (Create, Read, Update, Delete)"
+        }
+      ]
+    }
+  ]
+}

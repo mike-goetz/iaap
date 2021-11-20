@@ -1,0 +1,67 @@
+[
+  {
+    "username": "mike.goetz",
+    "contact": {
+      "firstname": "Mike",
+      "lastname": "Götz",
+      "gender": {
+        "id": "MALE"
+      },
+      "email": "mike.goetz@emineo.ch"
+    },
+    "roles": [
+      {
+        "id": "ADMIN"
+      },
+      {
+        "id": "USER"
+      }
+    ]
+  },
+  {
+    "username": "tim.porter",
+    "contact": {
+      "firstname": "Tim",
+      "lastname": "Porter",
+      "gender": {
+        "id": "MALE"
+      },
+      "email": "tim.porter@emineo.ch"
+    },
+    "roles": [
+      {
+        "id": "USER"
+      },
+      {
+        "id": "MANAGER"
+      }
+    ]
+  },
+  {
+    "username": "max.muster",
+    "contact": {
+      "firstname": "Max",
+      "lastname": "Muster",
+      "gender": {
+        "id": "DIVERSE"
+      },
+      "email": "max.muster@emineo.ch"
+    },
+    "roles": [
+      {
+        "id": "USER"
+      }
+    ]
+  },
+  {
+    "username": "sia.elona",
+    "contact": {
+      "firstname": "Sia",
+      "lastname": "Elona",
+      "gender": {
+        "id": "FEMALE"
+      },
+      "email": "sia.elona@emineo.ch"
+    }
+  }
+]

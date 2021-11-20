@@ -1,0 +1,113 @@
+{
+  "attributeType": {
+    "id": "GENDER",
+    "localizations": [
+      {
+        "type": "NAME",
+        "languageCode": "en",
+        "value": "Gender"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "de",
+        "value": "Geschlecht"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "en",
+        "value": "Genders"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "de",
+        "value": "Geschlechter"
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "MALE",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Männlich"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Homme"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Maschio"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Male"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "FEMALE",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Weiblich"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Femelle"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Femmina"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Female"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "DIVERSE",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Divers"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "fr",
+          "value": "Diverse"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "it",
+          "value": "Diversi"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Diverse"
+        }
+      ]
+    }
+  ]
+}

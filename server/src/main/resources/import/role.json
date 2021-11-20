@@ -1,0 +1,139 @@
+{
+  "attributeType": {
+    "id": "ROLE",
+    "localizations": [
+      {
+        "type": "NAME",
+        "languageCode": "en",
+        "value": "Role"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "de",
+        "value": "Rolle"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "en",
+        "value": "Roles"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "de",
+        "value": "Rollen"
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "ADMIN",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Admin"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Admin Role"
+        }
+      ],
+      "permissions": [
+        {
+          "id": "EDIT_ROLES"
+        },
+        {
+          "id": "EDIT_PERMISSIONS"
+        },
+        {
+          "id": "EDIT_USERS"
+        },
+        {
+          "id": "INVITE_USERS"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "MANAGER",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Manager"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Manager Role"
+        }
+      ],
+      "permissions": [
+        {
+          "id": "SEARCH_ISSUES"
+        },
+        {
+          "id": "DISPLAY_REPORTS"
+        },
+        {
+          "id": "INVITE_USERS"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "USER",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "User"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "User Role"
+        }
+      ],
+      "permissions": [
+        {
+          "id": "SEARCH_ISSUES"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "deleted": false,
+      "origin": "SYSTEM",
+      "id": "BETA_TESTER",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Beta Tester"
+        },
+        {
+          "type": "DESCRIPTION",
+          "languageCode": "en",
+          "value": "Beta Tester Role"
+        }
+      ],
+      "permissions": [
+        {
+          "id": "SYNC_PREVIEW"
+        },
+        {
+          "id": "EDIT_SYNC_TASKS"
+        }
+      ]
+    }
+  ]
+}
