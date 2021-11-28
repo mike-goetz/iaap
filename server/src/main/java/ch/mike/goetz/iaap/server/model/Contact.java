@@ -1,6 +1,7 @@
 package ch.mike.goetz.iaap.server.model;
 
 import com.google.common.base.MoreObjects;
+import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners({AuditingEntityListener.class})
 @Table(name = "contact")
-public class Contact implements Persistable<Long> {
+public class Contact implements Persistable<Long>, Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "optimized-sequence")

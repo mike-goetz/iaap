@@ -1,31 +1,18 @@
 package ch.mike.goetz.iaap.server.model.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@Getter
+@RequiredArgsConstructor
 public class AttributeService {
 
-  // @formatter:off
-    @Autowired private AppLanguageService appLanguageService;
-    @Autowired private GenderService genderService;
-    @Autowired private PermissionService permissionService;
-    @Autowired private RoleService roleService;
-    // @formatter:on
+  private final AttributeStatusService attributeStatusService;
+  private final AppLanguageService appLanguageService;
+  private final GenderService genderService;
+  private final PermissionService permissionService;
+  private final RoleService roleService;
 
-  public AppLanguageService getAppLanguageService() {
-    return appLanguageService;
-  }
-
-  public GenderService getGenderService() {
-    return genderService;
-  }
-
-  public PermissionService getPermissionService() {
-    return permissionService;
-  }
-
-  public RoleService getRoleService() {
-    return roleService;
-  }
 }

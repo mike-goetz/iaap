@@ -1,0 +1,142 @@
+{
+  "attributeType": {
+    "id": "ATTRIBUTE_STATUS",
+    "localizations": [
+      {
+        "type": "NAME",
+        "languageCode": "en",
+        "value": "Attribute Status"
+      },
+      {
+        "type": "NAME",
+        "languageCode": "de",
+        "value": "Attribut Status"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "en",
+        "value": "Attribute Status"
+      },
+      {
+        "type": "PLURAL",
+        "languageCode": "de",
+        "value": "Attribut Status"
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "origin": "SYSTEM",
+      "sortOrder": 1,
+      "id": "ACTIVE",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Aktiv"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Active"
+        }
+      ],
+      "transitions": [
+        {
+          "active": true,
+          "deleted": false,
+          "origin": "SYSTEM",
+          "id": "ACTIVE->INACTIVE",
+          "target": "INACTIVE",
+          "localizations": [
+            {
+              "type": "NAME",
+              "languageCode": "de",
+              "value": "deaktivieren"
+            },
+            {
+              "type": "NAME",
+              "languageCode": "en",
+              "value": "deactivate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "origin": "SYSTEM",
+      "sortOrder": 2,
+      "id": "INACTIVE",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Inaktiv"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Inactive"
+        }
+      ],
+      "transitions": [
+        {
+          "active": true,
+          "deleted": false,
+          "origin": "SYSTEM",
+          "id": "INACTIVE->ACTIVE",
+          "target": "ACTIVE",
+          "localizations": [
+            {
+              "type": "NAME",
+              "languageCode": "de",
+              "value": "reaktivieren"
+            },
+            {
+              "type": "NAME",
+              "languageCode": "en",
+              "value": "re-activate"
+            }
+          ]
+        },
+        {
+          "active": true,
+          "deleted": false,
+          "origin": "SYSTEM",
+          "id": "INACTIVE->DELETED",
+          "target": "DELETED",
+          "localizations": [
+            {
+              "type": "NAME",
+              "languageCode": "de",
+              "value": "löschen"
+            },
+            {
+              "type": "NAME",
+              "languageCode": "en",
+              "value": "delete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "origin": "SYSTEM",
+      "sortOrder": 3,
+      "id": "DELETED",
+      "localizations": [
+        {
+          "type": "NAME",
+          "languageCode": "de",
+          "value": "Gelöscht"
+        },
+        {
+          "type": "NAME",
+          "languageCode": "en",
+          "value": "Deleted"
+        }
+      ],
+      "transitions": []
+    }
+  ]
+}

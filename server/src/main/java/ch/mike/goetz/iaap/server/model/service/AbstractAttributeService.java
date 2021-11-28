@@ -15,11 +15,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 public abstract class AbstractAttributeService<L extends AbstractLocalization, T extends Attribute<L>> extends AbstractService<T, String, AttributeRepository<L, T>> {
 
-  private final AttributeRepository<L, T> repository;
-
   protected AbstractAttributeService(AttributeRepository<L, T> repository) {
     super(repository);
-    this.repository = repository;
   }
 
   /**
@@ -28,7 +25,7 @@ public abstract class AbstractAttributeService<L extends AbstractLocalization, T
    * @return map of all status values.
    */
   public Map<String, T> getIdentifierMap() {
-    return repository.findAll().stream().collect(Collectors.toMap(Attribute::getId, Function.identity()));
+    return getRepository().findAll().stream().collect(Collectors.toMap(Attribute::getId, Function.identity()));
   }
 
   /**
@@ -38,7 +35,7 @@ public abstract class AbstractAttributeService<L extends AbstractLocalization, T
    */
   @Transactional
   public Map<String, List<T>> getDefaultNameMap() {
-    List<T> all = repository.findAll();
+    List<T> all = getRepository().findAll();
     if (CollectionUtils.isNotEmpty(all)) {
       Map<String, List<T>> itemsByName = new HashMap<>();
       for (T attribute : all) {

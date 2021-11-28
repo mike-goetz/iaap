@@ -3,29 +3,19 @@ package ch.mike.goetz.iaap.server.model;
 import ch.mike.goetz.iaap.server.LocalizationUtil;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
@@ -33,47 +23,26 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @FieldNameConstants
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
-public abstract class Attribute<T extends AbstractLocalization> implements Persistable<String>, Serializable {
+public abstract class AbstractStatusTransition<T extends AbstractLocalization> extends AbstractStringPersistable {
 
   public static final String SYSTEM = "SYSTEM";
   public static final String USER = "USER";
 
-  @Id
-  private String id;
-
-  @Version
-  @Column(nullable = false)
-  private long version = 0;
-
-  @CreatedDate
-  @Column(nullable = false, updatable = false)
-  private Instant createdDate;
-
-  @CreatedBy
-  @ManyToOne(fetch = FetchType.LAZY)
-  private User createdBy;
-
-  @LastModifiedDate
-  private Instant lastModifiedDate;
-
-  @LastModifiedBy
-  @ManyToOne(fetch = FetchType.LAZY)
-  private User lastModifiedBy;
-
-  @ManyToOne(optional = false, fetch = FetchType.EAGER)
-  @JoinColumn(name = "attribute_type")
-  private AttributeType attributeType;
-
   @Column(nullable = false)
   private String origin;
 
+  @Column(nullable = false)
+  private String target;
+
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-  @JoinColumn(name = "attribute")
+  @JoinColumn(name = "transition")
   private final Set<T> localizations = new HashSet<>();
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "status")
-  private AttributeStatus status;
+  @Column(nullable = false)
+  private boolean deleted = false;
+
+  @Column(nullable = false)
+  private boolean active = true;
 
   private Integer sortOrder;
 
@@ -129,14 +98,9 @@ public abstract class Attribute<T extends AbstractLocalization> implements Persi
   }
 
   @Override
-  public boolean isNew() {
-    return createdDate == null;
-  }
-
-  @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .add("id", id)
+        .add("id", getId())
         .add("origin", origin)
         .toString();
   }
@@ -149,12 +113,12 @@ public abstract class Attribute<T extends AbstractLocalization> implements Persi
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Attribute<?> attribute = (Attribute<?>) o;
-    return Objects.equal(id, attribute.id) && Objects.equal(attributeType, attribute.attributeType);
+    AbstractStatusTransition<?> statusTransition = (AbstractStatusTransition<?>) o;
+    return Objects.equal(getId(), statusTransition.getId());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(id, attributeType);
+    return Objects.hashCode(getId());
   }
 }

@@ -13,6 +13,7 @@ import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,7 +45,8 @@ public class AttributeTypeSetup implements Persistable<String>, Serializable {
 
   @Version
   @Column(nullable = false)
-  private long version;
+  @Default
+  private long version = 0;
 
   @CreatedDate
   @Column(nullable = false, updatable = false)

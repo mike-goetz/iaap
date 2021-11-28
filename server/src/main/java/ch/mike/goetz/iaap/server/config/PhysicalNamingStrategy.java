@@ -10,13 +10,33 @@ import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 public class PhysicalNamingStrategy extends CamelCaseToUnderscoresNamingStrategy {
 
   @Override
-  public Identifier toPhysicalSequenceName(Identifier name, JdbcEnvironment jdbcEnvironment) {
-    Identifier originalIdentifier = super.toPhysicalSequenceName(toIdentifier(name.getText(), name.isQuoted()), jdbcEnvironment);
-    if (StringUtils.contains(originalIdentifier.getText(), "$") || StringUtils.containsIgnoreCase(originalIdentifier.getText(), "localization")) {
-      var newIdentifier = originalIdentifier.getText().replace("$", "_").replace("localization", "l10n");
-      return super.toPhysicalSequenceName(toIdentifier(newIdentifier, name.isQuoted()), jdbcEnvironment);
+  public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment jdbcEnvironment) {
+    Identifier originalIdentifier = super.toPhysicalTableName(name, jdbcEnvironment);
+    if (nameModificationNeeded(originalIdentifier)) {
+      return super.toPhysicalTableName(getModifiedIdentifier(name, originalIdentifier), jdbcEnvironment);
     }
     return originalIdentifier;
+  }
+
+  @Override
+  public Identifier toPhysicalSequenceName(Identifier name, JdbcEnvironment jdbcEnvironment) {
+    Identifier originalIdentifier = super.toPhysicalSequenceName(name, jdbcEnvironment);
+    if (nameModificationNeeded(originalIdentifier)) {
+      return super.toPhysicalSequenceName(getModifiedIdentifier(name, originalIdentifier), jdbcEnvironment);
+    }
+    return originalIdentifier;
+  }
+
+  private static boolean nameModificationNeeded(Identifier originalIdentifier) {
+    return StringUtils.contains(originalIdentifier.getText(), "$") || StringUtils.containsIgnoreCase(originalIdentifier.getText(), "localization");
+  }
+
+  private static Identifier getModifiedIdentifier(Identifier name, Identifier originalIdentifier) {
+    return toIdentifier(updateIdentifier(originalIdentifier), name.isQuoted());
+  }
+
+  private static String updateIdentifier(Identifier originalIdentifier) {
+    return originalIdentifier.getText().replace("$", "_").replace("localization", "l10n");
   }
 
 }

@@ -1,6 +1,7 @@
 package ch.mike.goetz.iaap.server;
 
 import ch.mike.goetz.iaap.server.model.AppLanguage;
+import ch.mike.goetz.iaap.server.model.AttributeStatus;
 import ch.mike.goetz.iaap.server.model.Gender;
 import ch.mike.goetz.iaap.server.model.Permission;
 import ch.mike.goetz.iaap.server.model.Role;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationCache {
 
+  private final LoadingCache<String, Optional<AttributeStatus>> attributeStatusCache;
   private final LoadingCache<String, Optional<AppLanguage>> appLanguageCache;
   private final LoadingCache<String, Optional<Gender>> genderCache;
   private final LoadingCache<String, Optional<Permission>> permissionCache;
   private final LoadingCache<String, Optional<Role>> roleCache;
 
   public ApplicationCache(AttributeService attributeService) {
+    attributeStatusCache = cacheDaily(id -> attributeService.getAttributeStatusService().findById(id));
     appLanguageCache = cacheDaily(id -> attributeService.getAppLanguageService().findById(id));
     genderCache = cacheDaily(id -> attributeService.getGenderService().findById(id));
     permissionCache = cacheDaily(id -> attributeService.getPermissionService().findById(id));
@@ -29,6 +32,7 @@ public class ApplicationCache {
   }
 
   //@formatter:off
+  public Optional<AttributeStatus> getAttributeStatus(String id) { return attributeStatusCache.getUnchecked(id); }
   public Optional<AppLanguage> getAppLanguage(String id) { return appLanguageCache.getUnchecked(id); }
   public Optional<Gender> getGender(String id) { return genderCache.getUnchecked(id); }
   public Optional<Permission> getPermission(String id) { return permissionCache.getUnchecked(id); }

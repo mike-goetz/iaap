@@ -26,8 +26,9 @@
   },
   "attributes": [
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "ADMIN",
       "localizations": [
@@ -58,8 +59,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "MANAGER",
       "localizations": [
@@ -87,8 +89,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "USER",
       "localizations": [
@@ -110,8 +113,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "BETA_TESTER",
       "localizations": [

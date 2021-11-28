@@ -1,5 +1,6 @@
 package ch.mike.goetz.iaap.server.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -23,7 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @FieldNameConstants
 @EntityListeners({AuditingEntityListener.class})
 @MappedSuperclass
-public abstract class AbstractStringPersistable implements Persistable<String> {
+public abstract class AbstractStringPersistable implements Persistable<String>, Serializable {
 
   @Id
   private String id;

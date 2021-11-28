@@ -46,8 +46,9 @@
   },
   "attributes": [
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "de_CH",
       "language": "de",
@@ -76,8 +77,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "fr_FR",
       "language": "fr",
@@ -106,8 +108,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "it_IT",
       "language": "it",
@@ -136,8 +139,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "en_EN",
       "language": "en",

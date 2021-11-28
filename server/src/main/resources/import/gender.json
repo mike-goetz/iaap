@@ -26,8 +26,9 @@
   },
   "attributes": [
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "MALE",
       "localizations": [
@@ -54,8 +55,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "FEMALE",
       "localizations": [
@@ -82,8 +84,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "DIVERSE",
       "localizations": [

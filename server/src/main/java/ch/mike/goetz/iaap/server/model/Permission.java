@@ -5,11 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.FieldNameConstants;
 
 @Getter
 @Setter
-@FieldNameConstants
 @Entity
 @Table(name = "app_permission")
 public class Permission extends Attribute<Localization> {

@@ -26,8 +26,9 @@
   },
   "attributes": [
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "EDIT_ROLES",
       "localizations": [
@@ -44,8 +45,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "EDIT_PERMISSIONS",
       "localizations": [
@@ -62,8 +64,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "ACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "EDIT_USERS",
       "localizations": [
@@ -80,8 +83,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "DELETED"
+      },
       "origin": "SYSTEM",
       "id": "SEARCH_ISSUES",
       "localizations": [
@@ -98,8 +102,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "DISPLAY_REPORTS",
       "localizations": [
@@ -116,8 +121,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "INACTIVE"
+      },
       "origin": "SYSTEM",
       "id": "INVITE_USERS",
       "localizations": [
@@ -134,8 +140,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "DELETED"
+      },
       "origin": "SYSTEM",
       "id": "SYNC_PREVIEW",
       "localizations": [
@@ -152,8 +159,9 @@
       ]
     },
     {
-      "active": true,
-      "deleted": false,
+      "status": {
+        "id": "DELETED"
+      },
       "origin": "SYSTEM",
       "id": "EDIT_SYNC_TASKS",
       "localizations": [
