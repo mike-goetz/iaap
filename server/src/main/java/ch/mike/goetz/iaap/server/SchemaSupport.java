@@ -1,7 +1,5 @@
 package ch.mike.goetz.iaap.server;
 
-import java.io.IOException;
-import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -10,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 
+import java.io.IOException;
+import java.util.Arrays;
+
 /**
- * Remove auto-generated schema files before JPA generates them. Otherwise new content will be appended to the files.
+ * Remove auto-generated schema files before JPA generates them. Otherwise new content will be
+ * appended to the files.
  */
 @Configuration
 public class SchemaSupport {
@@ -33,7 +35,7 @@ public class SchemaSupport {
     try {
       FileUtils.forceDelete(ResourceUtils.getFile(resourceLocation));
     } catch (IOException e) {
-      //ignore
+      // ignore
     }
   }
 }

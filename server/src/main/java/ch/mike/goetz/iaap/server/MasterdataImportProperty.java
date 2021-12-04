@@ -1,10 +1,11 @@
 package ch.mike.goetz.iaap.server;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @ConfigurationProperties(prefix = "application.masterdata")
@@ -21,5 +22,4 @@ public class MasterdataImportProperty {
   public Map<String, Resource> getFiles() {
     return files;
   }
-
 }

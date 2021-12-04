@@ -23,18 +23,10 @@ import ch.mike.goetz.iaap.server.model.service.AttributeStatusService;
 import ch.mike.goetz.iaap.server.model.service.SecurityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionLikeType;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.io.Resource;
@@ -43,10 +35,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 @Component
-@RequiredArgsConstructor
-@Slf4j
 public class LocalApplicationRunner implements ApplicationRunner {
+
+  private static final Logger log = LoggerFactory.getLogger(LocalApplicationRunner.class);
 
   private final PlatformTransactionManager txManager;
   private final ObjectMapper objectMapper;
@@ -59,57 +59,141 @@ public class LocalApplicationRunner implements ApplicationRunner {
   private final AttributeService attributeService;
   private final AttributeStatusService attributeStatusService;
 
+  public LocalApplicationRunner(
+      PlatformTransactionManager txManager,
+      ObjectMapper objectMapper,
+      PasswordEncoder passwordEncoder,
+      ApplicationCache applicationCache,
+      MasterdataImportProperty importProperty,
+      AttributeTypeRepository attributeTypeRepository,
+      AttributeTypeSetupRepository attributeTypeSetupRepository,
+      SecurityService securityService,
+      AttributeService attributeService,
+      AttributeStatusService attributeStatusService) {
+    this.txManager = txManager;
+    this.objectMapper = objectMapper;
+    this.passwordEncoder = passwordEncoder;
+    this.applicationCache = applicationCache;
+    this.importProperty = importProperty;
+    this.attributeTypeRepository = attributeTypeRepository;
+    this.attributeTypeSetupRepository = attributeTypeSetupRepository;
+    this.securityService = securityService;
+    this.attributeService = attributeService;
+    this.attributeStatusService = attributeStatusService;
+  }
+
   @Override
   public void run(ApplicationArguments args) throws Exception {
     TransactionTemplate tx = new TransactionTemplate(txManager);
-    tx.execute(status -> {
-      createAttributes();
-      createUsers();
-      return null;
-    });
+    tx.execute(
+        status -> {
+          createAttributes();
+          createUsers();
+          return null;
+        });
   }
 
   private void createAttributes() {
-    createStatus(AttributeStatus.class, AttributeStatus.Localization.class, AttributeStatusTransition.class, AttributeStatusTransition.Localization.class, attributeService.getAttributeStatusService(), "attributeStatus", getLockedSetup());
+    createStatus(
+        AttributeStatus.class,
+        AttributeStatus.Localization.class,
+        AttributeStatusTransition.class,
+        AttributeStatusTransition.Localization.class,
+        attributeService.getAttributeStatusService(),
+        "attributeStatus",
+        getLockedSetup());
 
-    createAttributes(AppLanguage.class, AppLanguage.Localization.class, attributeService.getAppLanguageService(), "appLanguage", getLockedSetup(), false, null);
-    createAttributes(Gender.class, Gender.Localization.class, attributeService.getGenderService(), "gender", getDefaultSetup(), false, null);
+    createAttributes(
+        AppLanguage.class,
+        AppLanguage.Localization.class,
+        attributeService.getAppLanguageService(),
+        "appLanguage",
+        getLockedSetup(),
+        false,
+        null);
+    createAttributes(
+        Gender.class,
+        Gender.Localization.class,
+        attributeService.getGenderService(),
+        "gender",
+        getDefaultSetup(),
+        false,
+        null);
 
-    createAttributes(Permission.class, Permission.Localization.class, attributeService.getPermissionService(), "permission", getLockedSetup(), false, null);
-    createAttributes(Role.class, Role.Localization.class, attributeService.getRoleService(), "role", getLockedSetup(), false, this::fetchAndReplaceRelations);
+    createAttributes(
+        Permission.class,
+        Permission.Localization.class,
+        attributeService.getPermissionService(),
+        "permission",
+        getLockedSetup(),
+        false,
+        null);
+    createAttributes(
+        Role.class,
+        Role.Localization.class,
+        attributeService.getRoleService(),
+        "role",
+        getLockedSetup(),
+        false,
+        this::fetchAndReplaceRelations);
   }
 
   private AttributeTypeSetup getLockedSetup() {
-    return AttributeTypeSetup.builder().sortable(true).deleteable(false).editable(true).extendable(false).hideable(false).build();
+    AttributeTypeSetup attributeTypeSetup = new AttributeTypeSetup();
+    attributeTypeSetup.setSortable(true);
+    attributeTypeSetup.setDeleteable(false);
+    attributeTypeSetup.setEditable(true);
+    attributeTypeSetup.setExtendable(false);
+    attributeTypeSetup.setHideable(false);
+    return attributeTypeSetup;
   }
 
   private AttributeTypeSetup getDefaultSetup() {
-    return AttributeTypeSetup.builder().sortable(true).deleteable(true).editable(true).extendable(true).hideable(true).build();
+    AttributeTypeSetup attributeTypeSetup = new AttributeTypeSetup();
+    attributeTypeSetup.setSortable(true);
+    attributeTypeSetup.setDeleteable(true);
+    attributeTypeSetup.setEditable(true);
+    attributeTypeSetup.setExtendable(true);
+    attributeTypeSetup.setHideable(true);
+    return attributeTypeSetup;
   }
 
   private void fetchAndReplaceRelations(List<Role> roles) {
     if (CollectionUtils.isEmpty(roles)) {
       return;
     }
-    roles.forEach(role -> {
-      var rolePermissions = role.getPermissions();
-      if (CollectionUtils.isEmpty(rolePermissions)) {
-        return;
-      }
-      var permissions = rolePermissions.stream().map(key -> applicationCache.getPermission(key.getId()))
-          .filter(Optional::isPresent)
-          .map(Optional::get)
-          .collect(Collectors.toSet());
-      role.setPermissions(permissions);
-    });
+    roles.forEach(
+        role -> {
+          var rolePermissions = role.getPermissions();
+          if (CollectionUtils.isEmpty(rolePermissions)) {
+            return;
+          }
+          var permissions =
+              rolePermissions.stream()
+                  .map(key -> applicationCache.getPermission(key.getId()))
+                  .filter(Optional::isPresent)
+                  .map(Optional::get)
+                  .collect(Collectors.toSet());
+          role.setPermissions(permissions);
+        });
   }
 
-  private <L extends AbstractLocalization, T extends Attribute<L>> void createAttributes(Class<T> type, Class<L> localization, AbstractAttributeService<L, T> service, String importId,
-      AttributeTypeSetup attributeTypeSetup, boolean sort, Consumer<List<T>> callback) {
+  private <L extends AbstractLocalization, T extends Attribute<L>> void createAttributes(
+      Class<T> type,
+      Class<L> localization,
+      AbstractAttributeService<L, T> service,
+      String importId,
+      AttributeTypeSetup attributeTypeSetup,
+      boolean sort,
+      Consumer<List<T>> callback) {
     if (service.count() == 0) {
       Resource importFile = importProperty.getFiles().get(importId);
-      log.info("Create \"{}\" Records", StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(type.getSimpleName()), " "));
-      List<T> items = importAttributeTypeAndGetItemsToPersist(importFile, type, localization, attributeTypeSetup, sort);
+      log.info(
+          "Create \"{}\" Records",
+          StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(type.getSimpleName()), " "));
+      List<T> items =
+          importAttributeTypeAndGetItemsToPersist(
+              importFile, type, localization, attributeTypeSetup, sort);
       if (callback != null) {
         callback.accept(items);
       }
@@ -118,10 +202,18 @@ public class LocalApplicationRunner implements ApplicationRunner {
     }
   }
 
-  private <L extends AbstractLocalization, T extends Attribute<L>> List<T> importAttributeTypeAndGetItemsToPersist(Resource resource, Class<? super T> importType, Class<? super L> localizationType,
-      AttributeTypeSetup attributeTypeSetup, boolean sort) {
+  private <L extends AbstractLocalization, T extends Attribute<L>>
+      List<T> importAttributeTypeAndGetItemsToPersist(
+          Resource resource,
+          Class<? super T> importType,
+          Class<? super L> localizationType,
+          AttributeTypeSetup attributeTypeSetup,
+          boolean sort) {
     try {
-      var type = objectMapper.getTypeFactory().constructParametricType(AttributeImport.class, localizationType, importType);
+      var type =
+          objectMapper
+              .getTypeFactory()
+              .constructParametricType(AttributeImport.class, localizationType, importType);
       AttributeImport<L, T> importer = objectMapper.readValue(resource.getInputStream(), type);
       var importerAttributeType = importer.getAttributeType();
       var identifier = importerAttributeType.getId();
@@ -139,52 +231,84 @@ public class LocalApplicationRunner implements ApplicationRunner {
         attributeType = attributeTypeRepository.save(persistedAttributeType);
       }
       var attributes = importer.getAttributes();
-      attributes.forEach(a -> {
-        if (a.getStatus() != null && a.getStatus().getId() != null) {
-          a.setStatus(applicationCache.getAttributeStatus(a.getStatus().getId()).orElse(null));
-        }
-        a.setAttributeType(attributeType);
-      });
+      attributes.forEach(
+          a -> {
+            if (a.getStatus() != null && a.getStatus().getId() != null) {
+              a.setStatus(applicationCache.getAttributeStatus(a.getStatus().getId()).orElse(null));
+            }
+            a.setAttributeType(attributeType);
+          });
 
       if (sort) {
         return attributes.stream()
             .sorted((a1, a2) -> StringUtils.compare(a1.getId(), a2.getId()))
-            .toList();
+            .collect(Collectors.toList());
       } else {
         return new ArrayList<>(attributes);
       }
     } catch (IOException e) {
-      log.error("Failed to load import file {} for {}", resource.getFilename(), importType.getSimpleName());
+      log.error(
+          "Failed to load import file {} for {}",
+          resource.getFilename(),
+          importType.getSimpleName());
       return Collections.emptyList();
     }
   }
 
-  private <A extends AbstractLocalization, B extends AbstractStatusTransition<A>, C extends AbstractLocalization, D extends AbstractStatus<C, A, B>> void createStatus(
-      Class<D> statusType,
-      Class<C> statusLocalizationType,
-      Class<B> transitionType,
-      Class<A> transitionLocalizationType,
-      AbstractAttributeService<C, D> service,
-      String importId,
-      AttributeTypeSetup attributeTypeSetup) {
+  private <
+          A extends AbstractLocalization,
+          B extends AbstractStatusTransition<A>,
+          C extends AbstractLocalization,
+          D extends AbstractStatus<C, A, B>>
+      void createStatus(
+          Class<D> statusType,
+          Class<C> statusLocalizationType,
+          Class<B> transitionType,
+          Class<A> transitionLocalizationType,
+          AbstractAttributeService<C, D> service,
+          String importId,
+          AttributeTypeSetup attributeTypeSetup) {
     if (service.count() == 0) {
       Resource importFile = importProperty.getFiles().get(importId);
-      log.info("Create \"{}\" Records", StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(statusType.getSimpleName()), " "));
-      List<D> items = importAttributeTypeAndGetItemsToPersist(importFile, statusType, statusLocalizationType, transitionType, transitionLocalizationType, attributeTypeSetup);
+      log.info(
+          "Create \"{}\" Records",
+          StringUtils.join(
+              StringUtils.splitByCharacterTypeCamelCase(statusType.getSimpleName()), " "));
+      List<D> items =
+          importAttributeTypeAndGetItemsToPersist(
+              importFile,
+              statusType,
+              statusLocalizationType,
+              transitionType,
+              transitionLocalizationType,
+              attributeTypeSetup);
       service.save(items);
       log.info("  -> {} Records imported", items.size());
     }
   }
 
-  private <A extends AbstractLocalization, B extends AbstractStatusTransition<A>, C extends AbstractLocalization, D extends AbstractStatus<C, A, B>> List<D> importAttributeTypeAndGetItemsToPersist(
-      Resource resource,
-      Class<? super D> statusType,
-      Class<? super C> statusLocalizationType,
-      Class<? super B> transitionType,
-      Class<? super A> transitionLocalizationType,
-      AttributeTypeSetup attributeTypeSetup) {
+  private <
+          A extends AbstractLocalization,
+          B extends AbstractStatusTransition<A>,
+          C extends AbstractLocalization,
+          D extends AbstractStatus<C, A, B>>
+      List<D> importAttributeTypeAndGetItemsToPersist(
+          Resource resource,
+          Class<? super D> statusType,
+          Class<? super C> statusLocalizationType,
+          Class<? super B> transitionType,
+          Class<? super A> transitionLocalizationType,
+          AttributeTypeSetup attributeTypeSetup) {
     try {
-      var type = objectMapper.getTypeFactory().constructParametricType(StatusImport.class, statusLocalizationType, transitionLocalizationType, transitionType, statusType);
+      var type =
+          objectMapper
+              .getTypeFactory()
+              .constructParametricType(
+                  StatusImport.class,
+                  statusLocalizationType,
+                  transitionLocalizationType,
+                  transitionType,
+                  statusType);
       StatusImport<C, A, B, D> importer = objectMapper.readValue(resource.getInputStream(), type);
       var importerAttributeType = importer.getAttributeType();
       var identifier = importerAttributeType.getId();
@@ -205,16 +329,22 @@ public class LocalApplicationRunner implements ApplicationRunner {
       attributes.forEach(a -> a.setAttributeType(attributeType));
 
       return attributes.stream()
-          .sorted(Comparator.comparingInt(Attribute::getSortOrder))
-          .toList();
+          .sorted((o1, o2) -> o1.getSortOrder().compareTo(o2.getSortOrder()))
+          .collect(Collectors.toList());
     } catch (IOException e) {
-      log.error("Failed to load import file {} for {}", resource.getFilename(), statusType.getSimpleName());
+      log.error(
+          "Failed to load import file {} for {}",
+          resource.getFilename(),
+          statusType.getSimpleName());
       return Collections.emptyList();
     }
   }
 
-  private void createAttributeTypeSetup(AttributeType attributeType, AttributeTypeSetup attributeTypeSetup) {
-    if (attributeType != null && attributeType.getId() != null && attributeTypeSetupRepository.findById(attributeType.getId()).isEmpty()) {
+  private void createAttributeTypeSetup(
+      AttributeType attributeType, AttributeTypeSetup attributeTypeSetup) {
+    if (attributeType != null
+        && attributeType.getId() != null
+        && attributeTypeSetupRepository.findById(attributeType.getId()).isEmpty()) {
       log.info("Create Attribute Type Setup for {}", attributeType.getId());
       attributeTypeSetup.setId(attributeType.getId());
       attributeTypeSetupRepository.save(attributeTypeSetup);
@@ -226,22 +356,28 @@ public class LocalApplicationRunner implements ApplicationRunner {
       log.info("Create initial Users");
 
       try {
-        CollectionLikeType type = objectMapper.getTypeFactory().constructCollectionLikeType(ArrayList.class, User.class);
-        List<User> users = objectMapper.readValue(importProperty.getFiles().get("user").getInputStream(), type);
+        CollectionLikeType type =
+            objectMapper.getTypeFactory().constructCollectionLikeType(ArrayList.class, User.class);
+        List<User> users =
+            objectMapper.readValue(importProperty.getFiles().get("user").getInputStream(), type);
         if (CollectionUtils.isEmpty(users)) {
           return;
         }
         log.info("  -> Create References between Users and Roles");
         for (User user : users) {
           if (user.getContact() != null && user.getContact().getGender() != null) {
-            user.getContact().setGender(applicationCache.getGender(user.getContact().getGender().getId()).orElse(null));
+            user.getContact()
+                .setGender(
+                    applicationCache.getGender(user.getContact().getGender().getId()).orElse(null));
           }
           var userRoles = user.getRoles();
           if (CollectionUtils.isNotEmpty(userRoles)) {
-            var roles = userRoles.stream().map(role -> applicationCache.getRole(role.getId()))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+            var roles =
+                userRoles.stream()
+                    .map(role -> applicationCache.getRole(role.getId()))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
             user.setRoles(roles);
           }
           user.setPassword(passwordEncoder.encode("test"));

@@ -10,5 +10,4 @@ public class GenderService extends AbstractAttributeService<Gender.Localization,
   public GenderService(GenderRepository genderRepository) {
     super(genderRepository);
   }
-
 }

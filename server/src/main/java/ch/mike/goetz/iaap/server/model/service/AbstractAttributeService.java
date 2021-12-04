@@ -3,6 +3,9 @@ package ch.mike.goetz.iaap.server.model.service;
 import ch.mike.goetz.iaap.server.model.AbstractLocalization;
 import ch.mike.goetz.iaap.server.model.Attribute;
 import ch.mike.goetz.iaap.server.model.repository.AttributeRepository;
+import org.apache.commons.collections4.CollectionUtils;
+
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
-import org.apache.commons.collections4.CollectionUtils;
 
-public abstract class AbstractAttributeService<L extends AbstractLocalization, T extends Attribute<L>> extends AbstractService<T, String, AttributeRepository<L, T>> {
+public abstract class AbstractAttributeService<
+        L extends AbstractLocalization, T extends Attribute<L>>
+    extends AbstractService<T, String, AttributeRepository<L, T>> {
 
   protected AbstractAttributeService(AttributeRepository<L, T> repository) {
     super(repository);
@@ -25,11 +28,13 @@ public abstract class AbstractAttributeService<L extends AbstractLocalization, T
    * @return map of all status values.
    */
   public Map<String, T> getIdentifierMap() {
-    return getRepository().findAll().stream().collect(Collectors.toMap(Attribute::getId, Function.identity()));
+    return getRepository().findAll().stream()
+        .collect(Collectors.toMap(Attribute::getId, Function.identity()));
   }
 
   /**
-   * Method to get attributes mapped to their default name in English. Since those localizations are not unique, a list of all attributes sharing the same default name is returned.
+   * Method to get attributes mapped to their default name in English. Since those localizations are
+   * not unique, a list of all attributes sharing the same default name is returned.
    *
    * @return map of all attributes mapped to their default name.
    */
@@ -53,5 +58,4 @@ public abstract class AbstractAttributeService<L extends AbstractLocalization, T
     }
     return Collections.emptyMap();
   }
-
 }

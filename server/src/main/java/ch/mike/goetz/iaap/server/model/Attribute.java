@@ -3,10 +3,17 @@ package ch.mike.goetz.iaap.server.model;
 import ch.mike.goetz.iaap.server.LocalizationUtil;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -17,33 +24,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldNameConstants;
-import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
-@SuperBuilder
-@NoArgsConstructor
-@Getter
-@Setter
-@FieldNameConstants
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
-public abstract class Attribute<T extends AbstractLocalization> implements Persistable<String>, Serializable {
+public abstract class Attribute<T extends AbstractLocalization>
+    implements Persistable<String>, Serializable {
 
   public static final String SYSTEM = "SYSTEM";
   public static final String USER = "USER";
 
-  @Id
-  private String id;
+  @Id private String id;
 
   @Version
   @Column(nullable = false)
@@ -57,8 +51,7 @@ public abstract class Attribute<T extends AbstractLocalization> implements Persi
   @ManyToOne(fetch = FetchType.LAZY)
   private User createdBy;
 
-  @LastModifiedDate
-  private Instant lastModifiedDate;
+  @LastModifiedDate private Instant lastModifiedDate;
 
   @LastModifiedBy
   @ManyToOne(fetch = FetchType.LAZY)
@@ -81,6 +74,90 @@ public abstract class Attribute<T extends AbstractLocalization> implements Persi
 
   private Integer sortOrder;
 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public long getVersion() {
+    return version;
+  }
+
+  public void setVersion(long version) {
+    this.version = version;
+  }
+
+  public Instant getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Instant createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public User getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(User createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public Instant getLastModifiedDate() {
+    return lastModifiedDate;
+  }
+
+  public void setLastModifiedDate(Instant lastModifiedDate) {
+    this.lastModifiedDate = lastModifiedDate;
+  }
+
+  public User getLastModifiedBy() {
+    return lastModifiedBy;
+  }
+
+  public void setLastModifiedBy(User lastModifiedBy) {
+    this.lastModifiedBy = lastModifiedBy;
+  }
+
+  public AttributeType getAttributeType() {
+    return attributeType;
+  }
+
+  public void setAttributeType(AttributeType attributeType) {
+    this.attributeType = attributeType;
+  }
+
+  public String getOrigin() {
+    return origin;
+  }
+
+  public void setOrigin(String origin) {
+    this.origin = origin;
+  }
+
+  public Set<T> getLocalizations() {
+    return localizations;
+  }
+
+  public AttributeStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(AttributeStatus status) {
+    this.status = status;
+  }
+
+  public Integer getSortOrder() {
+    return sortOrder;
+  }
+
+  public void setSortOrder(Integer sortOrder) {
+    this.sortOrder = sortOrder;
+  }
+
   /**
    * Add provided localization.
    *
@@ -96,11 +173,13 @@ public abstract class Attribute<T extends AbstractLocalization> implements Persi
    * Get localization by type in user language (iso3code).
    *
    * @param localizationType the tyoe (NAME, SYNONYM etc)
-   * @param userLanguage     the language code (e.g. en or de)
+   * @param userLanguage the language code (e.g. en or de)
    * @return the requested String
    */
   public String getLocalization(String localizationType, String userLanguage) {
-    return LocalizationUtil.map(this.localizations, localizationType, userLanguage, AbstractLocalization::getValue).orElse(getId());
+    return LocalizationUtil.map(
+            this.localizations, localizationType, userLanguage, AbstractLocalization::getValue)
+        .orElse(getId());
   }
 
   /**
@@ -139,10 +218,7 @@ public abstract class Attribute<T extends AbstractLocalization> implements Persi
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this)
-        .add("id", id)
-        .add("origin", origin)
-        .toString();
+    return MoreObjects.toStringHelper(this).add("id", id).add("origin", origin).toString();
   }
 
   @Override

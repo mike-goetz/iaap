@@ -10,5 +10,4 @@ public class UserService extends AbstractService<User, Long, UserRepository> {
   public UserService(UserRepository userRepository) {
     super(userRepository);
   }
-
 }

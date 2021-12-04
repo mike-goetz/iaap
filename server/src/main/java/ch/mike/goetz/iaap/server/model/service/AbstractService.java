@@ -1,18 +1,24 @@
 package ch.mike.goetz.iaap.server.model.service;
 
-import java.util.Collection;
-import java.util.Optional;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-@Getter
-@RequiredArgsConstructor
-public abstract class AbstractService<T, PK, R extends JpaRepository<T, PK> & JpaSpecificationExecutor<T>> {
+import java.util.Collection;
+import java.util.Optional;
+
+public abstract class AbstractService<
+    T, PK, R extends JpaRepository<T, PK> & JpaSpecificationExecutor<T>> {
 
   private final R repository;
+
+  public AbstractService(R repository) {
+    this.repository = repository;
+  }
+
+  public R getRepository() {
+    return repository;
+  }
 
   /**
    * Count {@link T} items.
@@ -60,7 +66,6 @@ public abstract class AbstractService<T, PK, R extends JpaRepository<T, PK> & Jp
    */
   public void save(Iterable<T> items) {
     repository.saveAll(items);
-
   }
 
   /**
@@ -101,5 +106,4 @@ public abstract class AbstractService<T, PK, R extends JpaRepository<T, PK> & Jp
   public Collection<T> findAll(Specification<T> specification) {
     return repository.findAll(specification);
   }
-
 }

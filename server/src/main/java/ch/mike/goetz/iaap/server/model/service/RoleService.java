@@ -10,5 +10,4 @@ public class RoleService extends AbstractAttributeService<Role.Localization, Rol
   public RoleService(RoleRepository roleRepository) {
     super(roleRepository);
   }
-
 }

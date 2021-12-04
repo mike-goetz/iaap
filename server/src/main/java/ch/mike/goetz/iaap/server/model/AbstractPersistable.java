@@ -1,7 +1,15 @@
 package ch.mike.goetz.iaap.server.model;
 
-import java.io.Serializable;
-import java.time.Instant;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -11,19 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldNameConstants;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.io.Serializable;
+import java.time.Instant;
 
-@Getter
-@Setter
-@FieldNameConstants
 @EntityListeners({AuditingEntityListener.class})
 @MappedSuperclass
 public abstract class AbstractPersistable implements Persistable<Long>, Serializable {
@@ -44,8 +42,7 @@ public abstract class AbstractPersistable implements Persistable<Long>, Serializ
   @ManyToOne(fetch = FetchType.LAZY)
   private User createdBy;
 
-  @LastModifiedDate
-  private Instant lastModifiedDate;
+  @LastModifiedDate private Instant lastModifiedDate;
 
   @LastModifiedBy
   @ManyToOne(fetch = FetchType.LAZY)

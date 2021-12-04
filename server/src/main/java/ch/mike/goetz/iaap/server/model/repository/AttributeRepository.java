@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttributeRepository<L extends AbstractLocalization, T extends Attribute<L>> extends JpaRepository<T, String>, JpaSpecificationExecutor<T> {
-
-}
+public interface AttributeRepository<L extends AbstractLocalization, T extends Attribute<L>>
+    extends JpaRepository<T, String>, JpaSpecificationExecutor<T> {}

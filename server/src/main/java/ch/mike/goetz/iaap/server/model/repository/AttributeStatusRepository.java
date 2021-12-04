@@ -4,6 +4,5 @@ import ch.mike.goetz.iaap.server.model.AttributeStatus;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttributeStatusRepository extends AttributeRepository<AttributeStatus.Localization, AttributeStatus> {
-
-}
+public interface AttributeStatusRepository
+    extends AttributeRepository<AttributeStatus.Localization, AttributeStatus> {}

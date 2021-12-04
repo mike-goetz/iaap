@@ -2,8 +2,14 @@ package ch.mike.goetz.iaap.server.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import java.io.Serializable;
-import java.time.Instant;
+import lombok.experimental.FieldNameConstants;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -13,30 +19,15 @@ import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import lombok.Builder.Default;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldNameConstants;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.io.Serializable;
+import java.time.Instant;
 
-@Getter
-@Setter
 @FieldNameConstants
-@SuperBuilder
-@NoArgsConstructor
 @Entity
 @EntityListeners({AuditingEntityListener.class})
 @Table(
     name = "attribute_type_setup",
-    indexes = {@Index(columnList = "attribute_type", unique = true)}
-)
+    indexes = {@Index(columnList = "attribute_type", unique = true)})
 public class AttributeTypeSetup implements Persistable<String>, Serializable {
 
   @Id
@@ -45,8 +36,7 @@ public class AttributeTypeSetup implements Persistable<String>, Serializable {
 
   @Version
   @Column(nullable = false)
-  @Default
-  private long version = 0;
+  private Long version;
 
   @CreatedDate
   @Column(nullable = false, updatable = false)
@@ -56,8 +46,7 @@ public class AttributeTypeSetup implements Persistable<String>, Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   private User createdBy;
 
-  @LastModifiedDate
-  private Instant lastModifiedDate;
+  @LastModifiedDate private Instant lastModifiedDate;
 
   @LastModifiedBy
   @ManyToOne(fetch = FetchType.LAZY)
@@ -78,6 +67,97 @@ public class AttributeTypeSetup implements Persistable<String>, Serializable {
   @Column(nullable = false)
   private boolean sortable;
 
+  public AttributeTypeSetup() {}
+
+  @Override
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public Long getVersion() {
+    return version;
+  }
+
+  public void setVersion(Long version) {
+    this.version = version;
+  }
+
+  public Instant getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Instant createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public User getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(User createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public Instant getLastModifiedDate() {
+    return lastModifiedDate;
+  }
+
+  public void setLastModifiedDate(Instant lastModifiedDate) {
+    this.lastModifiedDate = lastModifiedDate;
+  }
+
+  public User getLastModifiedBy() {
+    return lastModifiedBy;
+  }
+
+  public void setLastModifiedBy(User lastModifiedBy) {
+    this.lastModifiedBy = lastModifiedBy;
+  }
+
+  public boolean isEditable() {
+    return editable;
+  }
+
+  public void setEditable(boolean editable) {
+    this.editable = editable;
+  }
+
+  public boolean isHideable() {
+    return hideable;
+  }
+
+  public void setHideable(boolean hideable) {
+    this.hideable = hideable;
+  }
+
+  public boolean isDeleteable() {
+    return deleteable;
+  }
+
+  public void setDeleteable(boolean deleteable) {
+    this.deleteable = deleteable;
+  }
+
+  public boolean isExtendable() {
+    return extendable;
+  }
+
+  public void setExtendable(boolean extendable) {
+    this.extendable = extendable;
+  }
+
+  public boolean isSortable() {
+    return sortable;
+  }
+
+  public void setSortable(boolean sortable) {
+    this.sortable = sortable;
+  }
+
   @Override
   public boolean isNew() {
     return createdDate == null;
@@ -85,9 +165,7 @@ public class AttributeTypeSetup implements Persistable<String>, Serializable {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this)
-        .add("id", id)
-        .toString();
+    return MoreObjects.toStringHelper(this).add("id", id).toString();
   }
 
   @Override

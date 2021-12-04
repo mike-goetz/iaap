@@ -1,29 +1,25 @@
 package ch.mike.goetz.iaap.server.model;
 
 import ch.mike.goetz.iaap.server.model.Role.Localization;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldNameConstants;
+import java.util.Set;
 
-@Getter
-@Setter
-@FieldNameConstants
 @Entity
 @Table(name = "app_role")
 public class Role extends Attribute<Localization> {
 
   @Entity
   @Table(name = "app_role_l10n")
-  public static class Localization extends AbstractLocalization {
-
-  }
+  public static class Localization extends AbstractLocalization {}
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
@@ -32,4 +28,11 @@ public class Role extends Attribute<Localization> {
       inverseJoinColumns = @JoinColumn(name = "permission_id"))
   private Set<Permission> permissions;
 
+  public Set<Permission> getPermissions() {
+    return permissions;
+  }
+
+  public void setPermissions(Set<Permission> permissions) {
+    this.permissions = permissions;
+  }
 }

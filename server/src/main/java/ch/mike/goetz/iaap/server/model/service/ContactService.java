@@ -10,5 +10,4 @@ public class ContactService extends AbstractService<Contact, Long, ContactReposi
   public ContactService(ContactRepository contactRepository) {
     super(contactRepository);
   }
-
 }

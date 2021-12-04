@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttributeTypeRepository extends JpaRepository<AttributeType, String>, JpaSpecificationExecutor<AttributeType> {
-
-}
+public interface AttributeTypeRepository
+    extends JpaRepository<AttributeType, String>, JpaSpecificationExecutor<AttributeType> {}

@@ -10,5 +10,4 @@ public class RaceEventService extends AbstractService<RaceEvent, Long, RaceEvent
   public RaceEventService(RaceEventRepository raceEventRepository) {
     super(raceEventRepository);
   }
-
 }

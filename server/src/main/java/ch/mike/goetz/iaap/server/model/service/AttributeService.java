@@ -1,12 +1,8 @@
 package ch.mike.goetz.iaap.server.model.service;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@Getter
-@RequiredArgsConstructor
 public class AttributeService {
 
   private final AttributeStatusService attributeStatusService;
@@ -15,4 +11,36 @@ public class AttributeService {
   private final PermissionService permissionService;
   private final RoleService roleService;
 
+  public AttributeService(
+      AttributeStatusService attributeStatusService,
+      AppLanguageService appLanguageService,
+      GenderService genderService,
+      PermissionService permissionService,
+      RoleService roleService) {
+    this.attributeStatusService = attributeStatusService;
+    this.appLanguageService = appLanguageService;
+    this.genderService = genderService;
+    this.permissionService = permissionService;
+    this.roleService = roleService;
+  }
+
+  public AttributeStatusService getAttributeStatusService() {
+    return attributeStatusService;
+  }
+
+  public AppLanguageService getAppLanguageService() {
+    return appLanguageService;
+  }
+
+  public GenderService getGenderService() {
+    return genderService;
+  }
+
+  public PermissionService getPermissionService() {
+    return permissionService;
+  }
+
+  public RoleService getRoleService() {
+    return roleService;
+  }
 }

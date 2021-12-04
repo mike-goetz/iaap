@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RaceEventRepository extends JpaRepository<RaceEvent, Long>, JpaSpecificationExecutor<RaceEvent> {
-
-}
+public interface RaceEventRepository
+    extends JpaRepository<RaceEvent, Long>, JpaSpecificationExecutor<RaceEvent> {}
