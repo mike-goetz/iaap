@@ -1,8 +1,11 @@
 package ch.mike.goetz.iaap.server.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,6 +25,11 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.time.Instant;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners({AuditingEntityListener.class})
 @MappedSuperclass
 public abstract class AbstractPersistable implements Persistable<Long>, Serializable {

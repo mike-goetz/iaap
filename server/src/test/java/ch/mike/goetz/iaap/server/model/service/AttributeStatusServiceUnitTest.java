@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,17 +29,25 @@ class AttributeStatusServiceUnitTest {
     MockitoAnnotations.openMocks(this);
     attributeStatusService = new AttributeStatusService(attributeStatusRepository);
 
-    AttributeStatusTransition deactivateTransition = new AttributeStatusTransition();
-    deactivateTransition.setActive(true);
-    deactivateTransition.setDeleted(false);
-    deactivateTransition.setId("ACTIVE->INACTIVE");
-    deactivateTransition.setTarget("INACTIVE");
-    AttributeStatusTransition deleteTransition = new AttributeStatusTransition();
-    deleteTransition.setActive(false);
-    deleteTransition.setDeleted(true);
-    deleteTransition.setId("ACTIVE->DELETED");
-    deleteTransition.setTarget("DELETED");
-    AttributeStatus active = AttributeStatus.of("ACTIVE", deactivateTransition, deleteTransition);
+    AttributeStatusTransition deactivateTransition =
+        AttributeStatusTransition.builder()
+            .active(true)
+            .deleted(false)
+            .id("ACTIVE->INACTIVE")
+            .target("INACTIVE")
+            .build();
+    AttributeStatusTransition deleteTransition =
+        AttributeStatusTransition.builder()
+            .active(false)
+            .deleted(true)
+            .id("ACTIVE->DELETED")
+            .target("DELETED")
+            .build();
+    AttributeStatus active =
+        AttributeStatus.builder()
+            .id("ACTIVE")
+            .transitions(Arrays.asList(deactivateTransition, deleteTransition))
+            .build();
     when(attributeStatusRepository.findById("ACTIVE")).thenReturn(Optional.of(active));
   }
 

@@ -1,9 +1,12 @@
 package ch.mike.goetz.iaap.server.model;
 
 import com.google.common.base.MoreObjects;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -24,25 +27,47 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.time.Instant;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners({AuditingEntityListener.class})
 @Table(name = "race_event")
 public class RaceEvent implements Persistable<Long>, Serializable {
 
+  @SuperBuilder
+  @Getter
+  @Setter
+  @NoArgsConstructor(access = AccessLevel.PROTECTED)
   @Entity
   @Table(name = "race_event_status")
-  public class Status
+  public static class Status
       extends AbstractStatus<Status.Localization, StatusTransition.Localization, StatusTransition> {
 
+    @SuperBuilder
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @Entity
     @Table(name = "race_event_status_l10n")
     public static class Localization extends AbstractLocalization {}
   }
 
+  @SuperBuilder
+  @Getter
+  @Setter
+  @NoArgsConstructor(access = AccessLevel.PROTECTED)
   @Entity
   @Table(name = "race_event_status_transition")
-  public class StatusTransition extends AbstractStatusTransition<StatusTransition.Localization> {
+  public static class StatusTransition
+      extends AbstractStatusTransition<StatusTransition.Localization> {
 
+    @SuperBuilder
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @Entity
     @Table(name = "race_event_status_transition_l10n")
     public static class Localization extends AbstractLocalization {}
@@ -80,95 +105,6 @@ public class RaceEvent implements Persistable<Long>, Serializable {
 
   @ManyToOne(optional = false, fetch = FetchType.EAGER)
   private Status status;
-
-  @Override
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public long getVersion() {
-    return version;
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
-  }
-
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public Instant getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(Instant lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public User getLastModifiedBy() {
-    return lastModifiedBy;
-  }
-
-  public void setLastModifiedBy(User lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
-  }
-
-  public Instant getStart() {
-    return start;
-  }
-
-  public void setStart(Instant start) {
-    this.start = start;
-  }
-
-  public Instant getEnd() {
-    return end;
-  }
-
-  public void setEnd(Instant end) {
-    this.end = end;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
 
   @Override
   public boolean isNew() {

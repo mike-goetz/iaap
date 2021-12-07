@@ -1,9 +1,12 @@
 package ch.mike.goetz.iaap.server.model;
 
 import com.google.common.base.MoreObjects;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -31,6 +34,11 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners({AuditingEntityListener.class})
 @Table(
@@ -75,87 +83,6 @@ public class User implements Persistable<Long>, Serializable {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
-
-  @Override
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public long getVersion() {
-    return version;
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
-  }
-
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public Instant getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(Instant lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public User getLastModifiedBy() {
-    return lastModifiedBy;
-  }
-
-  public void setLastModifiedBy(User lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public Contact getContact() {
-    return contact;
-  }
-
-  public void setContact(Contact contact) {
-    this.contact = contact;
-  }
-
-  public Set<Role> getRoles() {
-    return roles;
-  }
-
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
-  }
 
   @Override
   public boolean isNew() {

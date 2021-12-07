@@ -23,10 +23,10 @@ import ch.mike.goetz.iaap.server.model.service.AttributeStatusService;
 import ch.mike.goetz.iaap.server.model.service.SecurityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionLikeType;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.io.Resource;
@@ -44,9 +44,9 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class LocalApplicationRunner implements ApplicationRunner {
-
-  private static final Logger log = LoggerFactory.getLogger(LocalApplicationRunner.class);
 
   private final PlatformTransactionManager txManager;
   private final ObjectMapper objectMapper;
@@ -58,29 +58,6 @@ public class LocalApplicationRunner implements ApplicationRunner {
   private final SecurityService securityService;
   private final AttributeService attributeService;
   private final AttributeStatusService attributeStatusService;
-
-  public LocalApplicationRunner(
-      PlatformTransactionManager txManager,
-      ObjectMapper objectMapper,
-      PasswordEncoder passwordEncoder,
-      ApplicationCache applicationCache,
-      MasterdataImportProperty importProperty,
-      AttributeTypeRepository attributeTypeRepository,
-      AttributeTypeSetupRepository attributeTypeSetupRepository,
-      SecurityService securityService,
-      AttributeService attributeService,
-      AttributeStatusService attributeStatusService) {
-    this.txManager = txManager;
-    this.objectMapper = objectMapper;
-    this.passwordEncoder = passwordEncoder;
-    this.applicationCache = applicationCache;
-    this.importProperty = importProperty;
-    this.attributeTypeRepository = attributeTypeRepository;
-    this.attributeTypeSetupRepository = attributeTypeSetupRepository;
-    this.securityService = securityService;
-    this.attributeService = attributeService;
-    this.attributeStatusService = attributeStatusService;
-  }
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -139,23 +116,23 @@ public class LocalApplicationRunner implements ApplicationRunner {
   }
 
   private AttributeTypeSetup getLockedSetup() {
-    AttributeTypeSetup attributeTypeSetup = new AttributeTypeSetup();
-    attributeTypeSetup.setSortable(true);
-    attributeTypeSetup.setDeleteable(false);
-    attributeTypeSetup.setEditable(true);
-    attributeTypeSetup.setExtendable(false);
-    attributeTypeSetup.setHideable(false);
-    return attributeTypeSetup;
+    return AttributeTypeSetup.builder()
+        .sortable(true)
+        .deleteable(false)
+        .editable(true)
+        .extendable(false)
+        .hideable(false)
+        .build();
   }
 
   private AttributeTypeSetup getDefaultSetup() {
-    AttributeTypeSetup attributeTypeSetup = new AttributeTypeSetup();
-    attributeTypeSetup.setSortable(true);
-    attributeTypeSetup.setDeleteable(true);
-    attributeTypeSetup.setEditable(true);
-    attributeTypeSetup.setExtendable(true);
-    attributeTypeSetup.setHideable(true);
-    return attributeTypeSetup;
+    return AttributeTypeSetup.builder()
+        .sortable(true)
+        .deleteable(true)
+        .editable(true)
+        .extendable(true)
+        .hideable(true)
+        .build();
   }
 
   private void fetchAndReplaceRelations(List<Role> roles) {

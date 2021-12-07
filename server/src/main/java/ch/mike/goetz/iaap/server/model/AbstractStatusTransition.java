@@ -3,9 +3,12 @@ package ch.mike.goetz.iaap.server.model;
 import ch.mike.goetz.iaap.server.LocalizationUtil;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -19,6 +22,11 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
 public abstract class AbstractStatusTransition<T extends AbstractLocalization>
@@ -44,50 +52,6 @@ public abstract class AbstractStatusTransition<T extends AbstractLocalization>
   private boolean active = true;
 
   private Integer sortOrder;
-
-  public String getOrigin() {
-    return origin;
-  }
-
-  public void setOrigin(String origin) {
-    this.origin = origin;
-  }
-
-  public String getTarget() {
-    return target;
-  }
-
-  public void setTarget(String target) {
-    this.target = target;
-  }
-
-  public Set<T> getLocalizations() {
-    return localizations;
-  }
-
-  public boolean isDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(boolean deleted) {
-    this.deleted = deleted;
-  }
-
-  public boolean isActive() {
-    return active;
-  }
-
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
-  public Integer getSortOrder() {
-    return sortOrder;
-  }
-
-  public void setSortOrder(Integer sortOrder) {
-    this.sortOrder = sortOrder;
-  }
 
   /**
    * Add provided localization.

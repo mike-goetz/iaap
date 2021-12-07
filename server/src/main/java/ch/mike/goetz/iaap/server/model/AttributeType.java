@@ -3,9 +3,12 @@ package ch.mike.goetz.iaap.server.model;
 import ch.mike.goetz.iaap.server.LocalizationUtil;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -29,6 +32,11 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @EntityListeners({AuditingEntityListener.class})
 @Table(name = "attribute_type")
@@ -67,75 +75,6 @@ public class AttributeType implements Persistable<String>, Serializable {
 
   @Column(nullable = false)
   private boolean active = true;
-
-  @Override
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public long getVersion() {
-    return version;
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
-  }
-
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public Instant getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(Instant lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public User getLastModifiedBy() {
-    return lastModifiedBy;
-  }
-
-  public void setLastModifiedBy(User lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
-  }
-
-  public Set<Localization> getLocalizations() {
-    return localizations;
-  }
-
-  public boolean isDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(boolean deleted) {
-    this.deleted = deleted;
-  }
-
-  public boolean isActive() {
-    return active;
-  }
-
-  public void setActive(boolean active) {
-    this.active = active;
-  }
 
   /**
    * Add provided localization.

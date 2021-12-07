@@ -2,7 +2,13 @@ package ch.mike.goetz.iaap.server.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,6 +28,11 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.time.Instant;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
 @Entity
 @EntityListeners({AuditingEntityListener.class})
@@ -66,97 +77,6 @@ public class AttributeTypeSetup implements Persistable<String>, Serializable {
 
   @Column(nullable = false)
   private boolean sortable;
-
-  public AttributeTypeSetup() {}
-
-  @Override
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public Long getVersion() {
-    return version;
-  }
-
-  public void setVersion(Long version) {
-    this.version = version;
-  }
-
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public Instant getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(Instant lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public User getLastModifiedBy() {
-    return lastModifiedBy;
-  }
-
-  public void setLastModifiedBy(User lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
-  }
-
-  public boolean isEditable() {
-    return editable;
-  }
-
-  public void setEditable(boolean editable) {
-    this.editable = editable;
-  }
-
-  public boolean isHideable() {
-    return hideable;
-  }
-
-  public void setHideable(boolean hideable) {
-    this.hideable = hideable;
-  }
-
-  public boolean isDeleteable() {
-    return deleteable;
-  }
-
-  public void setDeleteable(boolean deleteable) {
-    this.deleteable = deleteable;
-  }
-
-  public boolean isExtendable() {
-    return extendable;
-  }
-
-  public void setExtendable(boolean extendable) {
-    this.extendable = extendable;
-  }
-
-  public boolean isSortable() {
-    return sortable;
-  }
-
-  public void setSortable(boolean sortable) {
-    this.sortable = sortable;
-  }
 
   @Override
   public boolean isNew() {

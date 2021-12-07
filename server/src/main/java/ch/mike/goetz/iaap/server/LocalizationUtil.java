@@ -1,6 +1,8 @@
 package ch.mike.goetz.iaap.server;
 
 import ch.mike.goetz.iaap.server.model.AbstractLocalization;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,9 +10,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class LocalizationUtil {
-
-  private LocalizationUtil() {}
 
   public static <T extends AbstractLocalization, V> Optional<V> map(
       Set<T> localizations, String localizationType, String userLanguage, Function<T, V> mapper) {

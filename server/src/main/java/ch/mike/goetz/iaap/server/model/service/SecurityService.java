@@ -3,23 +3,18 @@ package ch.mike.goetz.iaap.server.model.service;
 import ch.mike.goetz.iaap.server.model.Permission;
 import ch.mike.goetz.iaap.server.model.Role;
 import ch.mike.goetz.iaap.server.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SecurityService {
 
   private final RoleService roleService;
   private final PermissionService permissionService;
   private final UserService userService;
-
-  public SecurityService(
-      RoleService roleService, PermissionService permissionService, UserService userService) {
-    this.roleService = roleService;
-    this.permissionService = permissionService;
-    this.userService = userService;
-  }
 
   public long countRoles() {
     return roleService.count();

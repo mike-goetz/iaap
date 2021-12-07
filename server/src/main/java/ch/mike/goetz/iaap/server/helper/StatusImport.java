@@ -4,10 +4,21 @@ import ch.mike.goetz.iaap.server.model.AbstractLocalization;
 import ch.mike.goetz.iaap.server.model.AbstractStatus;
 import ch.mike.goetz.iaap.server.model.AbstractStatusTransition;
 import ch.mike.goetz.iaap.server.model.AttributeType;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Set;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class StatusImport<
         L extends AbstractLocalization,
         LT extends AbstractLocalization,
@@ -17,20 +28,4 @@ public class StatusImport<
 
   private AttributeType attributeType;
   private Set<S> attributes;
-
-  public AttributeType getAttributeType() {
-    return attributeType;
-  }
-
-  public void setAttributeType(AttributeType attributeType) {
-    this.attributeType = attributeType;
-  }
-
-  public Set<S> getAttributes() {
-    return attributes;
-  }
-
-  public void setAttributes(Set<S> attributes) {
-    this.attributes = attributes;
-  }
 }

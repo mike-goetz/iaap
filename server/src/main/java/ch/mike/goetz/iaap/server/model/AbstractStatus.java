@@ -1,9 +1,12 @@
 package ch.mike.goetz.iaap.server.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.Singular;
-import lombok.experimental.FieldNameConstants;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.CascadeType;
@@ -15,6 +18,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 public abstract class AbstractStatus<
         L extends AbstractLocalization,
@@ -27,11 +35,7 @@ public abstract class AbstractStatus<
   @Singular
   private Set<T> transitions;
 
-  public Set<T> getTransitions() {
-    return transitions;
-  }
-
-  public void setTransitions(Set<T> transitions) {
+  protected void setTransitions(Set<T> transitions) {
     if (this.transitions == null) {
       this.transitions = new HashSet<>();
     } else {

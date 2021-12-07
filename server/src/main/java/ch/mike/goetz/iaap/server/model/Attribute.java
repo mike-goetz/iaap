@@ -3,9 +3,12 @@ package ch.mike.goetz.iaap.server.model;
 import ch.mike.goetz.iaap.server.LocalizationUtil;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,6 +32,11 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
 public abstract class Attribute<T extends AbstractLocalization>
@@ -73,90 +81,6 @@ public abstract class Attribute<T extends AbstractLocalization>
   private AttributeStatus status;
 
   private Integer sortOrder;
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public long getVersion() {
-    return version;
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
-  }
-
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public Instant getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(Instant lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public User getLastModifiedBy() {
-    return lastModifiedBy;
-  }
-
-  public void setLastModifiedBy(User lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
-  }
-
-  public AttributeType getAttributeType() {
-    return attributeType;
-  }
-
-  public void setAttributeType(AttributeType attributeType) {
-    this.attributeType = attributeType;
-  }
-
-  public String getOrigin() {
-    return origin;
-  }
-
-  public void setOrigin(String origin) {
-    this.origin = origin;
-  }
-
-  public Set<T> getLocalizations() {
-    return localizations;
-  }
-
-  public AttributeStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(AttributeStatus status) {
-    this.status = status;
-  }
-
-  public Integer getSortOrder() {
-    return sortOrder;
-  }
-
-  public void setSortOrder(Integer sortOrder) {
-    this.sortOrder = sortOrder;
-  }
 
   /**
    * Add provided localization.
